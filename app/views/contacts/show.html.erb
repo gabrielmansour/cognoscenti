@@ -1,0 +1,13 @@
+<header class="contact" id="contact-#{contact.id}">
+  <h2><%= link_to h(@contact.name), @contact %></h2>
+
+  <ul class="props inline">
+    <li><%= link_to 'Visit Website', @contact.url %></li>
+    <li>🔗 <%= link_to @contact.shortened_url.html_safe, @contact.shortened_url, title: @contact.url %></li>
+  </ul>
+
+  An expert in <span><%= pluralize @contact.topics.size, 'topic' %>:
+  <ul class="topics inline tags">
+    <%= @contact.topics.map { |t| content_tag(:li, h(t.name)) }.join.html_safe %>
+  </ul>
+</header>

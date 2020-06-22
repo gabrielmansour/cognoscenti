@@ -9,6 +9,21 @@
   </head>
 
   <body>
-    <%= yield %>
+    <header>
+      <h1><%= link_to 'Cognoscenti', root_path %></h1>
+      <h2>A directory of people who are especially well informed about a particular subject</h2>
+
+      <%= link_to 'Add Expert', new_contact_path, class: :right %>
+      <hr>
+    </header>
+
+    <div id="wrapper">
+      <%= yield %>
+    </div>
+
+    <footer>
+        <hr>
+        &copy;2020 All Rights Reserved
+    </footer>
   </body>
 </html>

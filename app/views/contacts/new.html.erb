@@ -1,0 +1,17 @@
+<h2>Add a new Expert to the directory</h2>
+
+<%= form_for @contact do |f| %>
+  <div>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div>
+    <%= f.label :url %>
+    <%= f.url_field :url %>
+  </div>
+
+  <div>
+    <%= f.submit %>
+  </div>
+<% end %>

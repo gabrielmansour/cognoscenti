@@ -4,6 +4,10 @@ class Contact < ApplicationRecord
 
   before_validation :shorten_url, on: :create, if: :url?
 
+  def topics
+    [] # TODO
+  end
+
   private
 
   def shorten_url
