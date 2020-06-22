@@ -21,7 +21,8 @@ docker-compose up
 ```
 
 
-## Notes
+## Notes / Caveats
 
 * Due to time constraints, I used traditional rails views instead of using a React frontend.
 Given more time, I could have built out the frontend using React.
+* I would also normally perform network calls (e.g. URL shortening, Scraping web pages) in a background job (e.g. using Sidekiq). But for simplicity's sake, and to prevent adding additional complexity for this example application, I am performing these synchronously.
