@@ -6,6 +6,20 @@ require File.expand_path('../config/environment', __dir__)
 abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'rspec/rails'
 require 'factory_bot_rails'
+require 'vcr'
+
+VCR.configure do |config|
+  config.cassette_library_dir = "spec/fixtures/vcr_cassettes"
+  config.hook_into :webmock
+end
+
+Shoulda::Matchers.configure do |c|
+  c.integrate do |with|
+    with.test_framework :rspec
+    with.library :rails
+  end
+end
+
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -77,10 +91,9 @@ RSpec.configure do |config|
     end
   end
 
-  Shoulda::Matchers.configure do |c|
-    c.integrate do |with|
-      with.test_framework :rspec
-      with.library :rails
+  config.around(:each) do |example|
+    VCR.use_cassette('scraped_website') do
+      VCR.use_cassette('tinyurl', record: :once, match_requests_on: %i[method host path], &example)
     end
   end
 end

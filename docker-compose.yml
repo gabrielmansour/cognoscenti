@@ -8,7 +8,6 @@ services:
     image: ruby:2.5.7-alpine
     build:
       context: .
-    env_file: .env
     environment:
       BUNDLE_PATH: /bundle
     volumes:

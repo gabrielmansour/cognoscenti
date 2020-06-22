@@ -25,6 +25,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'shorturl'
 
 group :development, :test do
+  gem 'dotenv-rails'
   # Call 'pry' anywhere in the code to stop execution and get a debugger console
   gem 'pry'
 end
@@ -45,6 +46,8 @@ group :test do
   gem 'rspec-its'
   gem 'rspec-rails'
   gem 'shoulda-matchers'
+  gem 'webmock'
+  gem 'vcr'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

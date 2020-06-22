@@ -14,14 +14,14 @@ RSpec.describe ContactsController do
 
   describe '#create' do
     before { post :create, params: params }
-    let(:params) { { contact: { name: 'Joe', url: 'https://example.com', shortened_url: 'https://shorty.ca' } } }
+    let(:params) { { contact: { name: 'Joe', url: 'http://example.com', shortened_url: 'https://shorty.ca' } } }
     let(:contact) { Contact.last }
 
     context 'valid input' do
       it 'creates a new Contact using the Name and URL' do
         expect(Contact.count).to eq 1
         expect(contact.name).to eq 'Joe'
-        expect(contact.url).to eq 'https://example.com'
+        expect(contact.url).to eq 'http://example.com'
         expect(contact.shortened_url).to be_present
         expect(contact.shortened_url).to_not eq 'https://shorty.ca'
       end
