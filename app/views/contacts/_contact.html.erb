@@ -1,7 +1,8 @@
 <section class="contact" id="contact-#{contact.id}">
   <h3><%= link_to h(contact.name), contact %></h3>
-  <div class="topic-count">⭐️ <%= contact.topics.size %></div>
+  <div class="topic-count">⭐️ <%= contact.topics.count %></div>
   <ul class="topics inline tags">
-    <%= contact.topics.map { |t| content_tag(:li, h(t.name)) }.join.html_safe %>
+    <%= contact.topics.limit(5).map { |t| content_tag(:li, h(t.name)) }.join.html_safe %>
+    <li>...</li>
   </ul>
 </section>

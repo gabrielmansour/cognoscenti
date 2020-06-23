@@ -10,4 +10,28 @@
   <ul class="topics inline tags">
     <%= @contact.topics.map { |t| content_tag(:li, h(t.name)) }.join.html_safe %>
   </ul>
+
+  <aside class="friends">
+    <h3>Friends</h3>
+    <ul>
+    <% @contact.friends.each do |friend| %>
+      <li>
+        <%= link_to h(friend.name), friend, title: 'View Profile' %>
+        <%= button_to '×', contact_friendships_path(@contact, friend_id: friend.id), method: :delete, title: 'Remove friend' %>
+      </li>
+    <% end %>
+    </ul>
+
+    <aside id="make_friends">
+      <h3>A Stranger's just a friend you haven't met&hellip;</h3>
+      <ul id="strangers">
+      <% Contact.not_friends_with(@contact).find_each do |contact| %>
+        <li>
+          <%= link_to h(contact.name), contact, title: 'View Profile' %>
+          <%= button_to 'Add Friend', contact_friendships_path(@contact, friend_id: contact.id) %>
+        </li>
+      <% end %>
+      <ul>
+    </aside>
+  </aside>
 </header>

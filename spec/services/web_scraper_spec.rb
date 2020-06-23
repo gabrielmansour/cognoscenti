@@ -1,15 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe WebScraper do
-  let(:html_io) { fixture_file('webpage.html') }
   let(:url) { 'http://example.com/' }
   let(:contact_id) { 123 }
 
   let(:relation) { Topic.where(contact_id: contact_id) }
 
   before do
-    # for the sake of foreign key integrity: (skips callbacks)
-    Contact.insert(attributes_for(:contact, id: contact_id))
+    # create Contact for the sake of foreign key integrity:
+    create(:contact, id: contact_id)
+
+    allow_any_instance_of(WebScraper).to receive(:call).and_call_original
   end
 
   describe '#call' do
@@ -24,29 +25,29 @@ RSpec.describe WebScraper do
     end
 
     it 'creates the correct topics', vcr: true do
-      topics = [[1,"Main Page"],
-      [2,"Did you know ..."],
-      [2,"From today's featured article"],
-      [2,"From today's featured list"],
-      [2,"In the news"],
-      [2,"Navigation menu"],
-      [2,"On this day"],
-      [2,"Other areas of Wikipedia"],
-      [2,"Today's featured picture"],
-      [2,"Wikipedia languages"],
-      [2,"Wikipedia's sister projects"],
-      [3,"Contribute"],
-      [3,"In other projects"],
-      [3,"Languages"],
-      [3,"More"],
-      [3,"Namespaces"],
-      [3,"Navigation"],
-      [3,"Personal tools"],
-      [3,"Print/export"],
-      [3,"Search"],
-      [3,"Tools"],
-      [3,"Variants"],
-      [3,"Views"]]
+      topics = [[1, "Main Page"],
+      [2, "Did you know ..."],
+      [2, "From today's featured article"],
+      [2, "From today's featured list"],
+      [2, "In the news"],
+      [2, "Navigation menu"],
+      [2, "On this day"],
+      [2, "Other areas of Wikipedia"],
+      [2, "Today's featured picture"],
+      [2, "Wikipedia languages"],
+      [2, "Wikipedia's sister projects"],
+      [3, "Contribute"],
+      [3, "In other projects"],
+      [3, "Languages"],
+      [3, "More"],
+      [3, "Namespaces"],
+      [3, "Navigation"],
+      [3, "Personal tools"],
+      [3, "Print/export"],
+      [3, "Search"],
+      [3, "Tools"],
+      [3, "Variants"],
+      [3, "Views"]]
 
       expect(relation.pluck(:heading_level, :name)).to eq []
       subject

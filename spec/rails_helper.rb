@@ -96,4 +96,9 @@ RSpec.configure do |config|
       VCR.use_cassette('tinyurl', record: :once, match_requests_on: %i[method host path], &example)
     end
   end
+
+  config.before(:each) do
+    allow(ShortURL).to receive(:shorten) { 'http://ndp.ca' }
+    allow_any_instance_of(WebScraper).to receive(:call)
+  end
 end
