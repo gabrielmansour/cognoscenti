@@ -1,37 +1,88 @@
-<header class="contact" id="contact-#{contact.id}">
-  <h2><%= link_to h(@contact.name), @contact %></h2>
+<article class="contact col s12 row" id="contact-#{contact.id}">
 
-  <ul class="props inline">
-    <li><%= link_to 'Visit Website', @contact.url %></li>
-    <li>🔗 <%= link_to @contact.shortened_url.html_safe, @contact.shortened_url, title: @contact.url %></li>
-  </ul>
+  <header class="row">
+    <h2 ><%= h @contact.name %></h2>
 
-  An expert in <span><%= pluralize @contact.topics.size, 'topic' %>:
-  <ul class="topics inline tags">
-    <%= @contact.topics.map { |t| content_tag(:li, h(t.name)) }.join.html_safe %>
-  </ul>
-
-  <aside class="friends">
-    <h3>Friends</h3>
-    <ul>
-    <% @contact.friends.each do |friend| %>
-      <li>
-        <%= link_to h(friend.name), friend, title: 'View Profile' %>
-        <%= button_to '×', contact_friendships_path(@contact, friend_id: friend.id), method: :delete, title: 'Remove friend' %>
+    <ul class="props inline">
+      <li class="chip"><%= link_to 'Visit Website', @contact.url %></li>
+      <li class="chip">
+        <i class="material-icons left">link</i>
+        <%= link_to @contact.shortened_url.html_safe, @contact.shortened_url, title: @contact.url %>
       </li>
-    <% end %>
     </ul>
 
-    <aside id="make_friends">
-      <h3>A Stranger's just a friend you haven't met&hellip;</h3>
-      <ul id="strangers">
-      <% Contact.not_friends_with(@contact).find_each do |contact| %>
-        <li>
-          <%= link_to h(contact.name), contact, title: 'View Profile' %>
-          <%= button_to 'Add Friend', contact_friendships_path(@contact, friend_id: contact.id) %>
-        </li>
+    <h5>An expert in <span><%= @contact.topics.size %></span> <%= 'topic'.pluralize(@contact.topics.size) %>:</h5>
+    <ul class="topics inline chips">
+      <%= @contact.topics.map do |t|
+        content_tag(:li, h(t.name), class: "chip level-#{t.heading_level}")
+      end.join.html_safe %>
+    </ul>
+  </header>
+
+  <div class="row">
+
+    <section class="experts-search col s7">
+      <%= form_tag(contact_path(@contact), method: :get) do %>
+        <fieldset>
+          <legend>Search <%=h @contact.name %>'s network for other experts</legend>
+          <%= label_tag :q, "What topic are you interested in?" %>
+          <%= text_field_tag :q, params[:q], type: :search, placeholder: 'e.g. science, math, healthcare, etc.' %>
+          <button type="submit" class="btn"><i class="material-icons left">search</i>Search</button>
+        </fieldset>
       <% end %>
-      <ul>
+
+      <% if params[:q].present? %>
+        <div id="search-results">
+          Search Results (<%= @results.count %>)
+        </div>
+      <% end %>
+    </section>
+
+    <aside class="friends col s5">
+      <div class="row">
+        <div class="col s12">
+          <ul class="tabs">
+            <li class="tab col s5"><a class="active" href="#friends">Friends</a></li>
+            <li class="tab col s7"><a href="#make_new_friends">Make New Friends</a></li>
+          </ul>
+        </div>
+        <section id="friends" class="col s12">
+          <ul class="collection">
+          <% if @contact.friends.empty? %><li class='collection-item'>No friends yet</li><% end %>
+          <% @contact.friends.to_a.each do |friend| %>
+            <li class="collection-item">
+              <i class="material-icons left">face</i>
+              <%= link_to h(friend.name), friend, title: 'View Profile' %>
+              <%= button_to '×', contact_friendships_path(@contact, friend_id: friend.id), method: :delete, title: 'Remove friend', form_class: 'secondary-content', class: 'btn btn-small red lighten-1' %>
+            </li>
+          <% end %>
+          </ul>
+        </section>
+
+        <section id="make_new_friends" class="col s12">
+          <aside id="make_friends">
+            <ul class="strangers collection with-header">
+            <li class="collection-header"><em>A stranger's just a friend you haven't met&hellip;</em></li>
+            <% Contact.not_friends_with(@contact).find_each do |contact| %>
+              <li class="collection-item">
+                <i class="material-icons left">person</i>
+                <%= link_to h(contact.name), contact, title: 'View Profile', class: 'title' %>
+                <%= button_to contact_friendships_path(@contact, friend_id: contact.id), form_class: 'secondary-content', class: 'valign-wrapper btn btn-small' do %>
+                  <i class="material-icons left">person_add</i>
+                  Add Friend
+                <% end %>
+              </li>
+            <% end %>
+            </ul>
+          </aside>
+       </section>
+     </div>
     </aside>
-  </aside>
-</header>
+  </div>
+</article>
+
+<% content_for :js do %>
+<script type="text/javascript">
+  var instance = M.Tabs.init(document.querySelector('.tabs'), {});
+</script>
+<% end %>

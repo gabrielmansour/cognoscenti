@@ -5,25 +5,38 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= javascript_include_tag 'manifest' %>
   </head>
 
   <body>
-    <header>
-      <h1><%= link_to 'Cognoscenti', root_path %></h1>
-      <h2>A directory of people who are especially well informed about a particular subject</h2>
+    <header id="header">
+      <h1 class="brand-logo"><%= link_to 'Cognoscenti', root_path %></h1>
+      <em>A directory of people who are especially well informed about a particular subject.</em>
 
-      <%= link_to 'Add Expert', new_contact_path, class: :right %>
-      <hr>
+      <div>
+        <%= link_to "View Experts Directory", root_path, class: 'btn-flat btn-large align-right' %>
+        <%= link_to '<i class="material-icons left">person_add</i>Add Expert'.html_safe, new_contact_path, class: 'right btn btn-large waves-effect waves-light' %>
+      </div>
     </header>
 
-    <div id="wrapper">
+    <main id="wrapper">
       <%= yield %>
-    </div>
+    </main>
 
-    <footer>
-        <hr>
+    <footer class="page-footer footer-copyright center">
         &copy;2020 All Rights Reserved
     </footer>
+
+    <%= yield :js %>
+    <% if flash.present? %>
+      <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+        <% flash.each do |type, text| %>
+          M.toast(<%= { html: text, classes: type }.to_json.html_safe %>);
+        <% end %>
+      });
+      </script>
+    <% end %>
   </body>
 </html>

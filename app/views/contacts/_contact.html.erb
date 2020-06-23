@@ -1,8 +1,24 @@
-<section class="contact" id="contact-#{contact.id}">
-  <h3><%= link_to h(contact.name), contact %></h3>
-  <div class="topic-count">⭐️ <%= contact.topics.count %></div>
-  <ul class="topics inline tags">
-    <%= contact.topics.limit(5).map { |t| content_tag(:li, h(t.name)) }.join.html_safe %>
-    <li>...</li>
+<section class="contact hoverable card-panel" id="contact-#{contact.id}">
+  <div class="topic-count right">
+    <i class="material-icons left">star</i>
+    <%= pluralize contact.topics.count, 'Topic' %>
+  </div>
+  <div class="friends-count right clear-right">
+    <i class="material-icons left">people</i>
+    <%= pluralize contact.friendships.count, 'Friend' %>
+  </div>
+
+  <h3>
+    <i class="material-icons left medium">person_pin</i>
+    <%= link_to h(contact.name), contact %>
+  </h3>
+  <div class="url clear">
+    <%= link_to contact.shortened_url, contact.shortened_url, class: :chip %>
+  </div>
+
+  <h4>Topics:</h4>
+  <ul class="topics inline chips">
+    <%= contact.topics.limit(5).map { |t| content_tag(:li, h(t.name), class: 'chip') }.join.html_safe %>
+    <li class="chip">...</li>
   </ul>
 </section>

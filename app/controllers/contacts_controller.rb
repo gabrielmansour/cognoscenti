@@ -1,6 +1,6 @@
 class ContactsController < ApplicationController
   def index
-    @contacts = Contact.all
+    @contacts = Contact.includes(:topics)
   end
 
   def new
@@ -18,6 +18,9 @@ class ContactsController < ApplicationController
 
   def show
     @contact = Contact.find(params[:id])
+    if params[:q].present?
+      @results = []
+    end
   end
 
   private

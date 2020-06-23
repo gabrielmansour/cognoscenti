@@ -1,0 +1,113 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+@import "materialize";
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+@import url('https://fonts.googleapis.com/css2?family=Rakkas&display=swap');
+
+#wrapper {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+  width: 100%;
+
+  h1, h2, h5, legend {
+    font-family: 'Rakkas', cursive;
+  }
+}
+
+
+legend {
+  font-size: 20px;
+  padding: 5px;
+}
+fieldset, #search-results {
+  padding: 15px;
+  border: 1px solid #ccc;
+  margin: 0 0 20px 0;
+}
+
+header#header {
+  @extend .purple, .lighten-1;
+  padding: 16px;
+  margin-bottom: 32px;
+
+  em {
+    display: block;
+    margin-bottom: 1em;
+    font-family: 'Rakkas', cursive;
+    font-style: normal;
+    @extend .yellow-text;
+  }
+}
+
+.brand-logo {
+  margin: 0;
+  &, a {
+    font-family: 'Rakkas', cursive;
+    @extend .indigo-text;
+  }
+}
+
+.topics.chips {
+  .level-1 { @extend .lighten-1, .purple; }
+  .level-2 { @extend .lighten-2, .purple; }
+  .level-3 { @extend .lighten-3, .purple; }
+}
+
+h5 span {
+  @extend .purple-text, .yellow;
+  padding: 0 0.3em;
+  border-radius: 8px;
+}
+
+// prevent too many contacts from overflowing
+#make_new_friends {
+  max-height: 600px;
+  overflow: auto;
+}
+
+.clear-right {
+  clear: right;
+}
+.clear { clear: both }
+
+.card-panel {
+  h3 {
+   font-family: 'Rakkas', cursive;
+   i { color: orange }
+   a {
+     @extend .purple-text;
+     &:hover { text-decoration: underline; }
+   }
+  }
+  h4 {
+    font-size: 0.8em;
+    text-transform: uppercase;
+    @extend .purple-text;
+  }
+  ul .chip {
+    @extend .purple, .lighten-4;
+  }
+}
