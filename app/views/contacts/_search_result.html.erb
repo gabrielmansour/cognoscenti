@@ -2,9 +2,14 @@
   <h3>
     <%= link_to h(search_result.name), contact_path(search_result) %>
     is an expert on
-    <%= search_result.topic_names.map { |topic| content_tag(:strong, h(topic)) }.join(' and ').html_safe
-    %>
+    <%= search_result.topic_names.map { |topic| content_tag(:strong, h(topic)) }.join(' and ').html_safe %>
   </h3>
+
+  <p class="topic_expertise_score" title="Topic Expertise Score">
+    <span><%= search_result.topic_expertise_score %>
+      <i class="material-icons right">stars</i>
+    </span>
+  </p>
 
   <p class="deg">
     <i class="material-icons left">supervisor_account</i>

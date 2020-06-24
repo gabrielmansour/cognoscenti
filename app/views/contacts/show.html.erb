@@ -24,7 +24,7 @@
     <section class="experts-search col s7">
       <%= form_tag(contact_path(@contact), method: :get) do %>
         <fieldset>
-          <legend>Search <%=h @contact.name %>'s network for other experts</legend>
+          <legend>Search <%=h @contact.name %>'s extended network for other experts</legend>
           <%= label_tag :q, "What topic are you interested in?" %>
           <%= text_field_tag :q, params[:q], type: :search, placeholder: 'e.g. science, math, healthcare, etc.' %>
           <button type="submit" class="btn"><i class="material-icons left">search</i>Search</button>

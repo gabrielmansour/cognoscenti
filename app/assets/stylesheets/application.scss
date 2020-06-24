@@ -62,6 +62,8 @@ header#header {
     font-style: normal;
     @extend .yellow-text;
   }
+
+  .btn-flat { color: #fff }
 }
 
 .brand-logo {
@@ -179,4 +181,9 @@ ol.breadcrumbs {
   border: 1px dotted #ddd;
   border-width: 1px 0;
   padding: 0.5em 0;
+}
+
+.topic_expertise_score {
+  @extend .indigo-text;
+  text-align: right;
 }
