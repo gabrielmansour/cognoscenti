@@ -20,6 +20,16 @@ To run the app locally, run:
 docker-compose up
 ```
 
+## Application Usage
+
+* Add Experts using the "Add Experts" button by providing their name and URL.
+  Their expertise topics will automatically be pulled in from the provided website.
+* Once you've populated enough experts in the system, you can add them as friends
+  from their profile.
+* From an expert's profile, you can search their extended network for 2nd-degree
+  contacts (and further) who are knowledgable about a particular topic or keyword.
+  A great way to make some new friends!
+
 
 ## Notes / Caveats
 
