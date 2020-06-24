@@ -16,6 +16,10 @@ class Contact < ApplicationRecord
      from query.create_table_alias(query, table_name)
   end
 
+  def contact_path
+    Array(contact_ids_path).zip(Array(contact_names_path))
+  end
+
   private
 
   def shorten_url

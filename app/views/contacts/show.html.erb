@@ -6,7 +6,7 @@
     <ul class="props inline">
       <li class="chip"><%= link_to 'Visit Website', @contact.url %></li>
       <li class="chip">
-        <i class="material-icons left">link</i>
+        <i class="material-icons">link</i>
         <%= link_to @contact.shortened_url.html_safe, @contact.shortened_url, title: @contact.url %>
       </li>
     </ul>
@@ -33,8 +33,21 @@
 
       <% if params[:q].present? %>
         <div id="search-results">
-          Search Results (<%= @results.count %>)
+          <div id="sorts" class="right valign-wrapper">
+            Sort results by:
+
+            <%= link_to contact_path(@contact, sort: :distance, q: params[:q]), { title: 'Sort results by Degrees of Separation', class: (:active if params[:sort] != 'expertise') } do %>
+              <i class="material-icons">supervisor_account</i>
+            <% end %>
+            <%= link_to contact_path(@contact, sort: :expertise, q: params[:q]), { title: 'Sort results by Expertise Level', class: (:active if params[:sort] == 'expertise') } do %>
+              <i class="material-icons">stars</i>
+            <% end %>
+          </div>
+
+          <h3>Search Results (<%= @results.count %>)</h3>
+          <p>Only showing friends of friends and beyond</p>
         </div>
+        <%= render partial: 'search_result', collection: @results %>
       <% end %>
     </section>
 

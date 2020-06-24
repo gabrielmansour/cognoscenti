@@ -19,7 +19,7 @@ class ContactsController < ApplicationController
   def show
     @contact = Contact.find(params[:id])
     if params[:q].present?
-      @results = []
+      @results = SearchQuery.new(@contact).call(params[:q], sort: params[:sort])
     end
   end
 

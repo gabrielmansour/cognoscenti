@@ -1,0 +1,22 @@
+<section class="search_result hoverable card-panel" id="search_result-#{search_result.id}">
+  <h3>
+    <%= link_to h(search_result.name), contact_path(search_result) %>
+    is an expert on
+    <%= search_result.topic_names.map { |topic| content_tag(:strong, h(topic)) }.join(' and ').html_safe
+    %>
+  </h3>
+
+  <p class="deg">
+    <i class="material-icons left">supervisor_account</i>
+    <%= search_result.degrees_of_separation %>
+    degrees of separation
+  </p>
+
+  <p>How to connect with <%=h search_result.name %>:</p>
+  <ol class="breadcrumbs">
+    <li><%=h @contact.name %></li>
+    <% search_result.contact_path.each do |id, name| %>
+      <li><%= link_to h(name), contact_path(id) %></li>
+    <% end %>
+  </ol>
+</section>

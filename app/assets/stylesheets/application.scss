@@ -32,9 +32,11 @@ main {
   flex: 1 0 auto;
   width: 100%;
 
-  h1, h2, h5, legend {
+  h1, h2, h3, h5, legend {
     font-family: 'Rakkas', cursive;
   }
+
+  a:hover { text-decoration: underline; }
 }
 
 
@@ -42,7 +44,7 @@ legend {
   font-size: 20px;
   padding: 5px;
 }
-fieldset, #search-results {
+fieldset {
   padding: 15px;
   border: 1px solid #ccc;
   margin: 0 0 20px 0;
@@ -99,7 +101,6 @@ h5 span {
    i { color: orange }
    a {
      @extend .purple-text;
-     &:hover { text-decoration: underline; }
    }
   }
   h4 {
@@ -110,4 +111,72 @@ h5 span {
   ul .chip {
     @extend .purple, .lighten-4;
   }
+}
+
+.chip i { vertical-align: middle; }
+
+.search_result {
+  clear: both;
+  a { @extend .purple-text; }
+  h3 {
+    font-size: 1.4em;
+    line-height: 1.4em;
+    strong {
+      @extend .indigo-text, .yellow;
+      padding: 0 0.25em;
+    }
+  }
+}
+
+#search-results h3 {
+  font-size: 1.5em;
+  padding-top: 0.4em;
+  & + p {
+    font-style: italic;
+    font-size: 0.8em;
+    color: #aaa;
+  }
+}
+
+#sorts {
+  border: 1px solid #eee;
+  border-radius: 5px;
+  vertical-align: middle;
+  color: #999;
+  text-transform: uppercase;
+  line-height: 2.5em;
+  white-space: nowrap;
+  padding-left: 0.5em;
+  margin-bottom: 2em;
+  a {
+    border-left: 1px solid #eee;
+    color: #666;
+    padding: 0 0.6em;
+    &:hover { color: #444; }
+    * { vertical-align: middle; }
+    &:first-child { margin-left: 0.5em }
+  }
+  .active, a:hover {
+    background-color: #eee;
+  }
+}
+
+ol.breadcrumbs {
+  list-style: none;
+  margin-left: 0;
+  padding-left: 0;
+  display: block;
+  li {
+    display: inline-block;
+    &:nth-child(n+2):before {
+      content: "→";
+      padding: 0 0.5em;
+    }
+  }
+}
+
+.deg {
+  border: 1px dotted #ddd;
+  border-width: 1px 0;
+  padding: 0.5em 0;
 }

@@ -39,4 +39,29 @@ RSpec.describe ContactsController do
       it { is_expected.to render_template('contacts/new') }
     end
   end
+
+  describe '#show' do
+    let(:contact) { create(:contact) }
+    it 'shows the details page for the given contact' do
+      get :show, params: { id: contact.id }
+      expect(assigns(:contact)).to eq contact
+      expect(assigns(:results)).to be_nil
+    end
+
+    context 'when there is a search query provided' do
+      let(:search_query) { double(:search_query) }
+      let(:search_results) { double(:search_results) }
+
+      before do
+        allow(SearchQuery).to receive(:new).with(contact).and_return(search_query)
+        allow(search_query).to receive(:call).with('life', sort: 'expertise') { search_results }
+      end
+
+      it 'shows the details page for the given contact' do
+        get :show, params: { id: contact.id, q: 'life', sort: 'expertise' }
+        expect(assigns(:contact)).to eq contact
+        expect(assigns(:results)).to eq search_results
+      end
+    end
+  end
 end
