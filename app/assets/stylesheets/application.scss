@@ -17,6 +17,8 @@
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 @import url('https://fonts.googleapis.com/css2?family=Rakkas&display=swap');
 
+$error-color: #F44336;
+
 #wrapper {
   max-width: 1000px;
   margin: 0 auto;
@@ -186,4 +188,16 @@ ol.breadcrumbs {
 .topic_expertise_score {
   @extend .indigo-text;
   text-align: right;
+}
+
+div.field_with_errors {
+  input {
+    @extend .invalid;
+    background-color: lighten($error-color, 40%) !important;
+  }
+  label { color: $error-color; }
+}
+
+#toast-container .error {
+  background-color: $error-color;
 }
