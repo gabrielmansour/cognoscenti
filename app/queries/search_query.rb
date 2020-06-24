@@ -20,7 +20,7 @@ class SearchQuery
     .group('1,2,3,4,5')
 
     Contact.with.recursive(experts: query_arel.to_sql)
-      .select('*').from(subquery, :t)
+      .select('*').from(subquery)
       .where('degrees_of_separation > 1 and shortest_path')
       .order(sort_order(sort))
   end
@@ -39,7 +39,7 @@ class SearchQuery
       'ARRAY[contacts.id] AS contact_ids_path',
       'ARRAY[contacts.name] AS contact_names_path'
     ]).joins(:friendships)
-    .merge(Friendship.where("friend_id = #{@contact.id}"))
+    .where('friendships.friend_id = ?', @contact.id)
   end
 
   def recursive_case
@@ -53,7 +53,7 @@ class SearchQuery
     .joins(:friendships)
     .joins('INNER JOIN experts ON friendships.friend_id = experts.id')
     .where('degrees_of_separation < 6') # see ~kbacon
-    .where("contacts.id != #{@contact.id}")
+    .where("contacts.id != ?", @contact.id)
   end
 
   def topic_expertise_level
