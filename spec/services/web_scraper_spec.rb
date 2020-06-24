@@ -9,8 +9,6 @@ RSpec.describe WebScraper do
   before do
     # create Contact for the sake of foreign key integrity:
     create(:contact, id: contact_id)
-
-    allow_any_instance_of(WebScraper).to receive(:call).and_call_original
   end
 
   describe '#call' do

@@ -8,10 +8,12 @@ class ContactsController < ApplicationController
   end
 
   def create
-    @contact = Contact.new(contact_params)
-    if @contact.save
+    command = ContactCommand.new(contact_params)
+    @contact = command.contact
+    if command.create
       redirect_to @contact, notice: 'Contact created successfully'
     else
+      flash[:error] = command.errors.to_s
       render :new
     end
   end

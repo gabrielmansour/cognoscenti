@@ -9,7 +9,6 @@ RSpec.describe Contact do
 
   it { is_expected.to validate_presence_of(:name) }
   it { is_expected.to validate_presence_of(:url) }
-  it { is_expected.to validate_presence_of(:shortened_url) }
 
   context 'with all attributes filled in properly' do
     it { is_expected.to be_valid }
@@ -23,7 +22,6 @@ RSpec.describe Contact do
     let(:url) { '' }
     before do
       allow(ShortURL).to receive(:shorten).and_call_original
-      allow_any_instance_of(WebScraper).to receive(:call).and_call_original
 
       subject.save
     end
@@ -32,10 +30,6 @@ RSpec.describe Contact do
       before { expect(ShortURL).to_not receive(:shorten) }
       it { is_expected.to_not be_persisted }
       its(:shorten_url) { is_expected.to be_nil }
-
-      it 'does not create any Topics' do
-        expect(Topic.count).to eq 0
-      end
     end
 
     context 'when URL is populated' do
@@ -43,10 +37,6 @@ RSpec.describe Contact do
       its(:shortened_url) { is_expected.to eq 'http://tinyurl.com/ya599baa' }
       its(:shortened_url) { is_expected.to match URI.regexp }
       it(vcr: true) { is_expected.to be_persisted }
-
-      it 'creates Topics for the Contact' do
-        expect(Topic.count).to eq 23
-      end
     end
   end
 

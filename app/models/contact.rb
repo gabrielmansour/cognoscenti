@@ -3,11 +3,11 @@ class Contact < ApplicationRecord
   has_many :friendships, dependent: :destroy
   has_many :friends, through: :friendships
 
-  validates :name, :url, :shortened_url, presence: true
-  validates :url, :shortened_url, format: URI.regexp
+  validates :name, :url, presence: true
+  validates :url, format: URI.regexp
+  validates :shortened_url, format: { with: URI.regexp, allow_nil: true }
 
-  before_validation :shorten_url, on: :create, if: :url?
-  after_create :hydrate_topics
+  before_create :shorten_url
   after_destroy :delete_friendships
 
   def self.not_friends_with(contact)
@@ -25,10 +25,6 @@ class Contact < ApplicationRecord
   def shorten_url
     return unless url?
     self.shortened_url = ShortURL.shorten(url)
-  end
-
-  def hydrate_topics
-    WebScraper.new(url, id).call
   end
 
   def delete_friendships

@@ -99,6 +99,5 @@ RSpec.configure do |config|
 
   config.before(:each) do
     allow(ShortURL).to receive(:shorten) { 'http://ndp.ca' }
-    allow_any_instance_of(WebScraper).to receive(:call)
   end
 end
